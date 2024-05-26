@@ -25,15 +25,14 @@ export default function Menubar({editor}: IMenubarProp) {
   ]
 
   return <div className="menu">
-    {menus.map(group => {
-      return <div className="group-item">
-        {group.map(item => {
-          return  <button className="menu-item" onClick={item.onClick}>
+    {menus.map((group, groupIndex) => {
+      return <div className="group-item" key={groupIndex}>
+        {group.map((item, itemIndex) => {
+          return  <button className="menu-item" onClick={item.onClick} key={itemIndex}>
         <i className={`ri-${item.icon} ${item.isActive}`}></i>
       </button>
-
         })}
       </div>
-          })}
+    })}
   </div>
 }

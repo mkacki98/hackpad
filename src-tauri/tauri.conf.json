@@ -11,8 +11,10 @@
   },
   "tauri": {
     "allowlist": {
-      "dialog": {
-        "save": true
+      "all": false,
+      "shell": {
+        "all": false,
+        "open": true
       }
     },
     "windows": [

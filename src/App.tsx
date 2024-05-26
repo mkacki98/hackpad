@@ -3,97 +3,107 @@ import './App.css'
 import MainEditor from "./components/MainEditor";
 import Sidebar from "./components/Sidebar";
 
-import { writeTextFile, readTextFile } from '@tauri-apps/api/fs';
 import { useEffect, useState } from 'react';
 
+interface Notepad {
+  title: string;
+  content: string;
+}
+
 export default function App() {
-  const [notes, setNotes] = useState<Array<Record<string, string>>>([]);
-  const [activeNote, setActiveNote] = useState(0);
-  const [activeNoteContent, setActiveNoteContent] = useState("");
+  const [notepads, setNotepads] = useState<Notepad[]>([]);
+  const [selectedNotepad, setSelectedNotepad] = useState({ title: '', content: '' });
 
-  const updateNotes = (notes: Array<Record<string, string>>) => {
-    setNotes([...notes]);
-    setNotesOnLocalStorage(JSON.stringify(notes));
-  };
-
-  const deleteNote = async (noteID: number) => {
-    await removeFile(notes[noteID].location);
-
-    notes.splice(noteID, 1);
-    // reason we used spread operator is because if we didn't,
-    // it would send the same object reference and useState wasn't updating it
-    updateNotes(notes);
-
-    if (activeNote >= noteID) {
-      setActiveNoteData(activeNote >= 1 ? activeNote - 1 : 0);
-    }
-  };
-
-  const addNote = async () => {
-    const savePath = await save();
-    if (!savePath) return;
-
-    await writeTextFile(`${savePath}.txt`, "");
-
-    const myNewNote = {
-      title: "New note",
-      created_at: `${dayjs().format("ddd, DD MMMM YYYY")} at ${dayjs().format(
-        "hh:mm A"
-      )}`,
-      location: `${savePath}.txt`,
-    };
-
-    updateNotes([{ ...myNewNote }, ...notes]);
-    setActiveNote(0);
-    setActiveNoteContent("");
-  };
-
-  const handleChange = ({
-    target: { value },
-  }: {
-    target: { value: string };
-  }) => {
-    if (notes.length === 0) return;
-
-    const header = value.split(/\r?\n/)[0];
-    if (notes.length !== 0 && notes[activeNote].title !== header) {
-      notes[activeNote].title = header;
-      updateNotes([...notes]);
-    }
-
-    setActiveNoteContent(value);
-    writeTextFile(notes[activeNote].location, value);
-  };
-
-  const setActiveNoteData = async (index: number) => {
-    setActiveNote(index);
-
-    if (notes.length === 0) setActiveNoteContent("");
-    else {
-      const contents = await readTextFile(notes[index].location);
-      setActiveNoteContent(contents);
-    }
-  };
-
+    // Load saved notepads on mount
   useEffect(() => {
-    const getNotesFromStorage = async () => {
-      const myNotes = await getNotes();
+      console.log("Loading notepads on mount.")
+      const loadNotepads = () => {
+        try {
+          const savedNotepadsData = localStorage.getItem('notepads');
+          const savedNotepads = savedNotepadsData ? JSON.parse(savedNotepadsData) : [];
+          setNotepads(savedNotepads);
+          
+          console.log('All notepads loaded successfully:', savedNotepads);
+        } catch (error) {
+          console.error('Error loading notepads on mount:', error);
+        }
+      };
+  
+      loadNotepads();
+    }, []);
 
-      setNotes(myNotes);
-    };
+  // Save notepads to local storage via onClick in the sidebar
+  const saveNotepad = async (title: string, content: string) => {
+    console.log('Saving notepad:', title, content);
 
-    getNotesFromStorage();
-  }, []);
+    try {
+      const newNotepad = { title, content };
+      
+      // Take notepads loaded on mount and add the new notepad
+      const updatedNotepads: { title: string; content: string; }[] = [...notepads, newNotepad];
+      setNotepads(updatedNotepads);
+
+      // Save notepads in the local storage
+      localStorage.setItem('notepads', JSON.stringify(updatedNotepads));
+
+      // Get all notepads from local storage and print them
+      const savedNotepadsData = localStorage.getItem('notepads');
+      const savedNotepads = savedNotepadsData ? JSON.parse(savedNotepadsData) : [];
+      console.log('All notepads in localStore after saving a new notepad:', savedNotepads);
+
+    } catch (error) {
+      console.error('Error saving notepad:', error);
+    }
+  };
+
+  const deleteNotepad = (notepad: Notepad) => {
+    console.log('Deleting notepad:', notepad.title);
+  
+    try {
+      // Filter out the notepad with the given title
+      const updatedNotepads = notepads.filter(n => n.title !== notepad.title);
+      setNotepads(updatedNotepads);
+  
+      // Update local storage
+      localStorage.setItem('notepads', JSON.stringify(updatedNotepads));
+  
+      // If the deleted notepad was the selected one, clear the selection
+      if (selectedNotepad.title === notepad.title) {
+        setSelectedNotepad({ title: '', content: '' });
+      }
+  
+      console.log('Notepad deleted successfully:', notepad.title);
+    } catch (error) {
+      console.error('Error deleting notepad:', error);
+    }
+  };
+
+  // Load content of a notepad onClick in a sidebar
+  const loadNotepadContent = (notepad: Notepad) => {
+    console.log('Loading notepad content to the main interface:', notepad);
+    try {
+      const savedNotepadsData = localStorage.getItem('notepads');
+      const savedNotepads = savedNotepadsData ? JSON.parse(savedNotepadsData) : [];
+
+      const selectedNotepad = savedNotepads.find((existingNotepad: Notepad) => existingNotepad.title === notepad.title);
+      if (selectedNotepad) {
+        setSelectedNotepad(selectedNotepad);
+      }
+    } catch (error) {
+      console.error('Error loading notepad content to the main interface:', error);
+    }
+  };
 
   return (
     <div className="app">
-        {saveError && <div className="error-message">{saveError}</div>}
       <Sidebar
         notepads={notepads}
         saveNotepad={saveNotepad}
         loadNotepadContent={loadNotepadContent}
+        deleteNotepad={deleteNotepad}
+        selectedNotepad={selectedNotepad}
       />
-      <MainEditor notepadContent={notepadContent} />
+      <MainEditor selectedNotepad={selectedNotepad} setSelectedNotepad={setSelectedNotepad} />
     </div>
   );
 }

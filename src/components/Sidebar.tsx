@@ -1,14 +1,30 @@
 import { useState } from 'react';
 
-const Sidebar = ({ notepads, saveNotepad, loadNotepadContent }) => {
+interface Notepad
+{
+  title: string;
+  content: string;
+}
+
+interface SidebarProps {
+  notepads: Notepad[];
+  saveNotepad: (title: string, content: string) => void;
+  loadNotepadContent: (notepad: Notepad) => void;
+  deleteNotepad:  (notepad: Notepad) => void;
+  selectedNotepad: Notepad;
+}
+
+const Sidebar = ({ notepads, saveNotepad, loadNotepadContent, selectedNotepad, deleteNotepad }: SidebarProps) => {
   const [newNotepadTitle, setNewNotepadTitle] = useState('');
 
-  const showNotepad = (notepad) => {
+  const showNotepad = (notepad: Notepad) => {
+    console.log("Using showNotepad.")
     loadNotepadContent(notepad);
   };
 
   const handleCreateNotepad = () => {
-    saveNotepad(newNotepadTitle, '');
+    console.log('Creating new notepad:', newNotepadTitle, "with content:", selectedNotepad.content);
+    saveNotepad(newNotepadTitle, selectedNotepad.content);
     setNewNotepadTitle('');
   };
 
@@ -21,7 +37,7 @@ const Sidebar = ({ notepads, saveNotepad, loadNotepadContent }) => {
         placeholder="New Notepad Title"
       />
       <button onClick={handleCreateNotepad}>Create Notepad</button>
-      {notepads.map((notepad, index) => (
+      {notepads.map((notepad: Notepad, index) => (
         <div
           key={index}
           onClick={() => showNotepad(notepad)}
@@ -30,8 +46,10 @@ const Sidebar = ({ notepads, saveNotepad, loadNotepadContent }) => {
           {notepad.title}
         </div>
       ))}
+      {selectedNotepad.title && <button onClick={() => deleteNotepad(selectedNotepad)}>Delete Selected Notepad</button>}
     </div>
   );
 };
+
 
 export default Sidebar;
