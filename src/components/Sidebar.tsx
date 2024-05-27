@@ -29,24 +29,28 @@ const Sidebar = ({ notepads, saveNotepad, loadNotepadContent, selectedNotepad, d
   };
 
   return (
-    <div>
+    <div className="sidebar">
+      <div className='daybook'>
+        Daybook
       <input
         type="text"
         value={newNotepadTitle}
         onChange={(e) => setNewNotepadTitle(e.target.value)}
-        placeholder="New Notepad Title"
+        placeholder="title"
       />
-      <button onClick={handleCreateNotepad}>Create Notepad</button>
+      <button onClick={handleCreateNotepad}>Create</button>
+      {selectedNotepad.title && <button onClick={() => deleteNotepad(selectedNotepad)}>Delete</button>}
       {notepads.map((notepad: Notepad, index) => (
         <div
           key={index}
+
           onClick={() => showNotepad(notepad)}
-          className="notepad-title"
+          className="entries"
         >
           {notepad.title}
         </div>
       ))}
-      {selectedNotepad.title && <button onClick={() => deleteNotepad(selectedNotepad)}>Delete Selected Notepad</button>}
+      </div>
     </div>
   );
 };
