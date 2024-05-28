@@ -45,6 +45,7 @@ button {
 button:hover {
   border-color: #396cd8;
 }
+
 button:active {
   border-color: #396cd8;
   background-color: #e8e8e8;
@@ -194,6 +195,16 @@ button {
   align-items: center;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+}
+
+.sidebar-container {
+  flex: 0 0 20vw; 
+  background-color: rgb(28, 38, 47);
+  align-items: flex-start;
+  display: flex;
+  border: 1px solid blue;
+  flex-direction: column;
 }
 
 .daybook {
@@ -203,6 +214,12 @@ button {
   height: 80%;
   background-color: rgb(28, 38, 47);
   border: 1px solid white;
+}
+
+.sidebar-tools {
+  gap: 1rem;
+  border: 1px solid yellow;
+  align-self: flex-end;
 }
 
 .entries {
@@ -216,4 +233,41 @@ button {
 .entries:hover {
   background-color: #afb13c;
   transition: background-color 2s ease;
+}
+
+.daybook-container {
+  display: flex;
+  justify-content: space-between;
+  order: 2;
+}
+
+.entries-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.new-note-icon {
+  width: 15px;
+  height: 15px;
+  order: 1;
+}
+
+.delete-icon {
+  width: 15px;
+  height: 15px;
+}
+
+.no-interaction {
+  background-color: transparent;
+  color: none;
+  box-shadow: none;
+  border-color: none;
+}
+
+.no-interaction:hover, .no-interaction:active {
+  background-color: transparent;
+  box-shadow: none;
+  cursor: none;
+  border-color: none;
 }

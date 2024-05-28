@@ -5,7 +5,7 @@ import Sidebar from "./components/Sidebar";
 import useNotepads from './hooks/useNotepads';
 
 export default function App() {
-  const { notepads, selectedNotepad, saveNotepad, deleteNotepad, loadNotepadContent, setSelectedNotepad} = useNotepads();
+  const { notepads, selectedNotepad, saveNotepad, deleteNotepad, loadNotepadContent, setSelectedNotepad, clearEditor} = useNotepads();
 
   return (
     <div className="app">
@@ -15,8 +15,9 @@ export default function App() {
         loadNotepadContent={loadNotepadContent}
         deleteNotepad={deleteNotepad}
         selectedNotepad={selectedNotepad}
+        clearEditor = {clearEditor}
       />
-      <MainEditor selectedNotepad={selectedNotepad} setSelectedNotepad={setSelectedNotepad} />
+      <MainEditor selectedNotepad={selectedNotepad} setSelectedNotepad={setSelectedNotepad} saveNotepad={saveNotepad}/>
     </div>
   );
 }

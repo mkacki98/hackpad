@@ -10,19 +10,26 @@ interface Notepad {
 interface MainEditorProps {
   selectedNotepad: Notepad;
   setSelectedNotepad: (notepad: Notepad) => void;
+  saveNotepad: (title: string, content: string) => void;
 }
 
-export default function MainEditor({ selectedNotepad, setSelectedNotepad }: MainEditorProps) {
+export default function MainEditor({ selectedNotepad, setSelectedNotepad, saveNotepad}: MainEditorProps) {
   
   // If text is changed in the editor, update the selectedNotepad content
   const editor = useEditor({
     extensions: [StarterKit],
-    content: `<h2>Here's some text</h2>`,
+    content: ``,
+  
     onUpdate: () => {
+      let newContent = editor?.getHTML() || "";
+      if (!newContent.startsWith('<h2>')) {
+        newContent = `<h2>${selectedNotepad.title}</h2>` + newContent;
+      }
       setSelectedNotepad({
         title: selectedNotepad.title,
-        content: editor?.getHTML() || "",
+        content: newContent
       });
+      saveNotepad(selectedNotepad.title, newContent);
     },
   });
 
