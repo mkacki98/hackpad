@@ -25,7 +25,7 @@ const Sidebar = ({ notepads, loadNotepadContent, selectedNotepad, deleteNotepad,
       <div className="sidebar-container">
         <div className="sidebar-tools">
           <button onClick={clearEditor} className="new-note">
-          <img src="/public/new-note.png" alt="NewNote" className="new-note-icon" />
+        <img src="/public/new-note.png" alt="NewNote" className="new-note-icon" />
         </button>
         </div>
         <div className='daybook-container'>

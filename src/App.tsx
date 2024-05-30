@@ -1,5 +1,5 @@
-// App.tsx
-import './App.css'
+import './output.css';
+
 import MainEditor from "./components/MainEditor";
 import Sidebar from "./components/Sidebar";
 import useNotepads from './hooks/useNotepads';
