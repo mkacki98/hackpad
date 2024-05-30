@@ -1,4 +1,5 @@
-import './output.css';
+import './App.css';
+import './output.css'
 
 import MainEditor from "./components/MainEditor";
 import Sidebar from "./components/Sidebar";
