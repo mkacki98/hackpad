@@ -1,7 +1,4 @@
 @import 'remixicon/fonts/remixicon.css';
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
 
 .app {
   display: flex;
@@ -37,11 +34,11 @@ button {
   color: #0f0f0f;
   background-color: #ffffff;
   transition: border-color 0.25s;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 button {
   cursor: pointer;
+  border: 1px solid #ffffff24;
 }
 
 button:hover {
@@ -75,15 +72,15 @@ button {
     background-color: #0f0f0f98;
   }
   button:active {
-    background-color: #0f0f0f69;
+    background-color: #221a1a69;
   }
 }
 
 /* MAIN EDITOR (right handside) */
 
 .main-editor {
-  background-color: #4d3f3f;
-  border-left: 1px solid white;
+  background-color: #0c0e09;
+  border-left: 0.1px solid rgba(255, 255, 255, 0.246);
   flex: 1; 
 }
 
@@ -94,6 +91,7 @@ button {
   padding: 0 1rem;
   position: fixed;
   z-index: 10;
+  padding: 20px;
 }
 
 .group-item {
@@ -108,36 +106,6 @@ button {
 .menu-item .is-active {
   color: #55db55;
 }
-
-::-webkit-scrollbar {
-  width: 14px;
-  height: 14px;
-}
-
-::-webkit-scrollbar-button {
-  display: none;
-  width: 0;
-  height: 0;
-}
-
-::-webkit-scrollbar-corner {
-  background-color: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  border: 4px solid rgba(0, 0, 0, 0);
-  background-clip: padding-box;
-  border-radius: 8px;
-  background-color: rgb(182, 182, 182);
-}
-
-::-webkit-scrollbar-track {
-  border: 4px solid transparent;
-  background-clip: padding-box;
-  border-radius: 8px;
-  background-color: transparent;
-}
-
 
 /* editor (via Remixon) */
 .ProseMirror {
@@ -192,8 +160,8 @@ button {
 /* SIDEBAR (left handside) */
 
 .sidebar {
-  flex: 0 0 20vw; 
-  background-color: rgb(28, 38, 47);
+  width: 25%;
+  background-color: rgb(0, 0, 0);
   align-items: center;
   display: flex;
   justify-content: center;
@@ -201,52 +169,56 @@ button {
 }
 
 .sidebar-container {
-  flex: 0 10 50vw; 
-  background-color: rgb(28, 38, 47);
-  align-items: flex-start;
+  width: 70%; 
+  height: 85%;
   display: flex;
-  border: 1px solid blue;
   flex-direction: column;
+  border: 1px solid blue;
 }
 
-.daybook {
-  flex: 0 0 15vw;
-  padding-top: 1rem; 
-  width: 50%;
-  height: 80%;
-  background-color: rgb(28, 38, 47);
-  border: 1px solid white;
-}
 
 .sidebar-tools {
-  gap: 1rem;
-  border: 1px solid yellow;
-  align-self: flex-end;
+  border: 1px solid red; 
+  height: 2%;
+  align-items: center;
+  display: flex;
+  padding: 30px;
+  justify-content: space-between;
+  border-bottom: 1px solid #ffffff24;
 }
 
 .entries {
-  cursor: pointer;
-  font-size: 20px;
-  padding: 10px;
-  background-color: transparent;  
-  transition: background-color 0.5s ease;
-}
-
-.entries:hover {
-  background-color: #afb13c;
-  transition: background-color 2s ease;
-}
-
-.daybook-container {
-  display: flex;
-  justify-content: space-between;
-  order: 2;
+  flex: 0 0 15vw;
+  padding-top: 1rem; 
+  width: 100%;
+  height: 100%;
+  align-items: center;
 }
 
 .entries-container {
   display: flex;
+  width: 100%;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.entry {
+  cursor: pointer;
+  font-size: 15px;
+  width: 100%;
+  background-color: transparent;  
+  transition: background-color 0.5s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid blue;
+}
+
+.entry:hover {
+  background-color: #a4a430;
+  transition: background-color 2s ease;
 }
 
 .new-note-icon {
@@ -260,16 +232,31 @@ button {
   height: 15px;
 }
 
-.no-interaction {
-  background-color: transparent;
-  color: none;
-  box-shadow: none;
-  border-color: none;
+.note-title {
+  margin: 300px 50px;
 }
 
-.no-interaction:hover, .no-interaction:active {
-  background-color: transparent;
+.delete-button {
+  margin: 0 30px;
+  padding: 6px;
+}
+
+.delete-button:hover, .delete-button:active {
   box-shadow: none;
-  cursor: none;
+  cursor: pointer;
   border-color: none;
+  cursor: pointer;
+}
+
+
+.note-title:hover, .note-title:active {
+  box-shadow: none;
+  cursor: pointer;
+  border-color: none;
+  cursor: pointer;
+}
+
+.headline-editor {
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.146); /* Add a white border */
+  margin-top: 2rem;
 }

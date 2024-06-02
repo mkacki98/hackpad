@@ -12071,11 +12071,6 @@ video {
   font-style: italic;
 }
 
-.text-red-500 {
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity));
-}
-
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
@@ -12277,7 +12272,7 @@ button {
 /* SIDEBAR (left handside) */
 
 .sidebar {
-  flex: 0 0 20vw;
+  height: 100vh;
   background-color: rgb(28, 38, 47);
   align-items: center;
   display: flex;
@@ -12286,11 +12281,12 @@ button {
 }
 
 .sidebar-container {
-  flex: 0 10 50vw;
+  width: 25%;
+  height: 20%;
   background-color: rgb(28, 38, 47);
   align-items: flex-start;
   display: flex;
-  border: 1px solid blue;
+  border: 1px solid rgb(255, 255, 255);
   flex-direction: column;
 }
 
