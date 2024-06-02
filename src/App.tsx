@@ -1,24 +1,21 @@
 import './App.css';
-import './output.css'
 
 import MainEditor from "./components/MainEditor";
 import Sidebar from "./components/Sidebar";
-import useNotepads from './hooks/useNotepads';
+import useNotes from './hooks/useNotes';
 
 export default function App() {
-  const { notepads, selectedNotepad, saveNotepad, deleteNotepad, loadNotepadContent, setSelectedNotepad, clearEditor} = useNotepads();
+  const { allNotes, displayedNote, saveNote, deleteNote, loadNoteContent, createNote} = useNotes();
 
   return (
     <div className="app">
       <Sidebar
-        notepads={notepads}
-        saveNotepad={saveNotepad}
-        loadNotepadContent={loadNotepadContent}
-        deleteNotepad={deleteNotepad}
-        selectedNotepad={selectedNotepad}
-        clearEditor = {clearEditor}
+        Notes={allNotes}
+        loadNoteContent={loadNoteContent}
+        deleteNote={deleteNote}
+        createNote = {createNote}
       />
-      <MainEditor selectedNotepad={selectedNotepad} setSelectedNotepad={setSelectedNotepad} saveNotepad={saveNotepad}/>
+      <MainEditor displayedNote={displayedNote} saveNote={saveNote} />
     </div>
   );
 }

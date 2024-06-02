@@ -1,51 +1,51 @@
-interface Notepad
+interface Note
 {
-  title: string;
+  id: string;
+  headline: string;
   content: string;
 }
 
 interface SidebarProps {
-  notepads: Notepad[];
-  saveNotepad: (title: string, content: string) => void;
-  loadNotepadContent: (notepad: Notepad) => void;
-  deleteNotepad:  (notepad: Notepad) => void;
-  clearEditor: () => void;
-  selectedNotepad: Notepad;
+  Notes: Note[];
+  loadNoteContent: (Note: Note) => void;
+  deleteNote:  (Note: Note) => void;
+  createNote: () => void;
 }
 
-const Sidebar = ({ notepads, loadNotepadContent, selectedNotepad, deleteNotepad, clearEditor }: SidebarProps) => {
-  const showNotepad = (notepad: Notepad) => {
-    console.log("Using showNotepad.")
-    loadNotepadContent(notepad);
+const Sidebar = ({ Notes, loadNoteContent, deleteNote, createNote }: SidebarProps) => {
+  
+  const displayNewNote = (Note: Note) => {
+    loadNoteContent(Note);
   };
-
 
   return (
     <div className="sidebar">
       <div className="sidebar-container">
         <div className="sidebar-tools">
-          <button onClick={clearEditor} className="new-note">
-        <img src="/public/new-note.png" alt="NewNote" className="new-note-icon" />
-        </button>
+          <button onClick={createNote} className="new-note-button">
+            <img src="/new-note.png" alt="NewNote" className="new-note-icon" />
+          </button>
+          <button onClick={createNote} className="new-note-button">
+            <img src="/new-note.png" alt="NewNote" className="new-note-icon" />
+          </button>
         </div>
-        <div className='daybook-container'>
-        <div className="entries-container">
-          {notepads.map((notepad: Notepad, index) => (
-            <div key={index} className="entries entry-container">
-              <div onClick={() => showNotepad(notepad)}>
-                {notepad.title}
+        <div className='entries-containers'>
+          <div className="entries">
+            {Notes.map((Note: Note, index) => (
+              <div key={index} className="entry" onClick={() => displayNewNote(Note)}>
+              <div onClick={(e) => e.stopPropagation()}>
+                  {Note.headline}
+                </div>
+                <button onClick={(e) => {e.stopPropagation(); deleteNote(Note);}} className="delete-button">
+                  <img src="/delete.svg" alt="Delete" className="delete-icon" />
+                </button>
               </div>
-              <button onClick={() => deleteNotepad(notepad)} className="no-hoover-button">
-                <img src="/public/delete.svg" alt="Delete" className="delete-icon" />
-              </button>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-        </div>
-    </div>
+      </div>
     </div>
   );
 };
-
 
 export default Sidebar;
