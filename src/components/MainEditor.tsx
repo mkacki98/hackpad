@@ -25,7 +25,7 @@ export default function MainEditor({ displayedNote, saveNote}: MainEditorProps) 
       let newTitle = headlineEditor?.getHTML();
       if (newTitle !== undefined) {
         console.log("New title to save: ", newTitle, "Old title: ", displayedNote.headline);
-        //newTitle = newTitle.replace(/<\/?p>/g, '');
+        newTitle = newTitle.replace(/<\/?p>/g, '');
         console.log("New title to save: ", newTitle, "Old title: ", displayedNote.headline);
         saveNote(displayedNote.id, newTitle, displayedNote.content);
       }
