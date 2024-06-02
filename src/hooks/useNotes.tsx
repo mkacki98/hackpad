@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import {daybookTemplate} from '../templates/daybookTemplate';
+
 interface Note {
   id: string;
   headline: string;
   content: string;
-}
+} 
 
 
 export default function useNotes() {
@@ -47,7 +49,7 @@ export default function useNotes() {
     const currentDate = new Date();
     let formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
 
-    const newNote = {id: id, headline: formattedDate, content: ``};
+    const newNote = {id: id, headline: formattedDate, content: daybookTemplate};
     saveNote(newNote);
     setDisplayedNote(newNote.id, newNote.headline, newNote.content);
   }
