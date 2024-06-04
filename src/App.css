@@ -81,7 +81,8 @@ button {
 .main-editor {
   background-color: #0c0e09;
   border-left: 0.1px solid rgba(255, 255, 255, 0.246);
-  flex: 1; 
+  flex: 1;
+  overflow-x: auto; 
 }
 
 /* Menu icons */
@@ -221,7 +222,6 @@ button {
 }
 
 .entry:hover {
-  background-color: #a4a430;
   transition: background-color 2s ease;
 }
 
