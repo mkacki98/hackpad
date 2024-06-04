@@ -3,10 +3,10 @@ import {  EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TaskList from '@tiptap/extension-task-list'
 import TaskItem from '@tiptap/extension-task-item'
-
+import Confetti from "react-dom-confetti";
 
 import Menubar from "./Menubar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 interface Note {
@@ -15,6 +15,7 @@ interface Note {
   content: string;
 }
 
+
 interface MainEditorProps {
   displayedNote: Note;
   saveNote: (id: string, headline: string, content: string) => void;
@@ -22,6 +23,8 @@ interface MainEditorProps {
 
 export default function MainEditor({ displayedNote, saveNote}: MainEditorProps) {
 
+  const [confetti, setConfetti] = useState(false);
+  
   const headlineEditor = useEditor({
     extensions: [StarterKit],
     content: '',
@@ -48,9 +51,14 @@ export default function MainEditor({ displayedNote, saveNote}: MainEditorProps) 
       if (newContent !== undefined) {
         console.log(newContent)
         saveNote(displayedNote.id, displayedNote.headline, newContent);
-      }
-    },
-  });
+        if (newContent.includes('<input type="checkbox" checked="checked">')) {
+          setConfetti(true);
+    
+          setTimeout(() => setConfetti(false), 2000);
+
+      }}}
+    });
+
 
   
   useEffect(() => {
@@ -72,6 +80,7 @@ export default function MainEditor({ displayedNote, saveNote}: MainEditorProps) 
         <EditorContent editor={headlineEditor} />
       </div>
       <EditorContent editor={editor} />
+      <Confetti active={confetti} />
     </div>
   );
 }
