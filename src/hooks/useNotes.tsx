@@ -102,7 +102,6 @@ export default function useNotes() {
   };
 
   const loadNoteContent = (Note: Note) => {
-    console.log("Currently loaded note: ", displayedNote.headline, "Loading note: ", Note.headline)
     try {
       const savedNotesData = localStorage.getItem('notes');
       const savedNotes = savedNotesData ? JSON.parse(savedNotesData) : [];
