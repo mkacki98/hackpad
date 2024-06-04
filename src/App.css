@@ -200,7 +200,6 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  border: 1px solid #ffffff24;
   overflow-y: auto;
 }
 
