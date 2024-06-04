@@ -25,15 +25,12 @@ const Sidebar = ({ Notes, loadNoteContent, deleteNote, createNote }: SidebarProp
           <button onClick={createNote} className="new-note-button">
             <img src="/new-note.png" alt="NewNote" className="new-note-icon" />
           </button>
-          <button onClick={createNote} className="new-note-button">
-            <img src="/new-note.png" alt="NewNote" className="new-note-icon" />
-          </button>
         </div>
         <div className='entries-containers'>
           <div className="entries">
             {Notes.map((Note: Note, index) => (
               <div key={index} className="entry" onClick={() => displayNewNote(Note)}>
-              <div onClick={(e) => e.stopPropagation()}>
+                <div className="entry-content" onClick={(e) => e.stopPropagation()}>
                   {Note.headline}
                 </div>
                 <button onClick={(e) => {e.stopPropagation(); deleteNote(Note);}} className="delete-button">
