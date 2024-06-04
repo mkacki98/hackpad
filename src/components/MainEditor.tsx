@@ -56,11 +56,12 @@ export default function MainEditor({ displayedNote, saveNote}: MainEditorProps) 
   useEffect(() => {
     if (displayedNote) {
       let wrappedHeadline = `<h1>${displayedNote.headline}</h1>`;
+
       headlineEditor?.commands.setContent(wrappedHeadline);
       editor?.commands.setContent(displayedNote.content);
     } else {
-      headlineEditor?.commands.setContent("This is where the headline of the note goes.", false, { preserveWhitespace: "full" });
-      editor?.commands.setContent("Create a new note with a button on the sidebar.", false, { preserveWhitespace: "full" });
+      headlineEditor?.commands.setContent("", false, { preserveWhitespace: "full" });
+      editor?.commands.setContent("", false, { preserveWhitespace: "full" });
     }
   }, [displayedNote, headlineEditor, editor]);
 

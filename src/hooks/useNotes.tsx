@@ -12,7 +12,7 @@ interface Note {
 
 export default function useNotes() {
   const [allNotes, setAllNotes] = useState<Note[]>([]);
-  const [displayedNote, setDisplayedNoteState] = useState({id: '', headline: '', content: '' });
+  const [displayedNote, setDisplayedNoteState] = useState<Note | null>(null);
 
   const setDisplayedNote = (id: string, headline: string, content: string): void => {
     setDisplayedNoteState({ id, headline, content });
@@ -83,15 +83,18 @@ export default function useNotes() {
     }
   };
 
-  useEffect(() => {
-    console.log("All notes after successful saving: ", allNotes);
-  }, [allNotes]);
+  // useEffect(() => {
+  //   console.log("All notes after successful saving: ", allNotes);
+  // }, [allNotes]);
 
   const deleteNote = (Note: Note) => {
     try {
       const updatedNotes = allNotes.filter(n => n.id !== Note.id);
       localStorage.setItem('notes', JSON.stringify(updatedNotes));
       setAllNotes(updatedNotes);
+      if (updatedNotes.length === 0) {
+        setDisplayedNoteState(null);
+      }
 
     } catch (error) {
       console.error('Error in deleteNote:', error);

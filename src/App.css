@@ -231,10 +231,17 @@ button {
   order: 1;
 }
 
+@keyframes gradient-wave {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 100%; }
+}
 
 .new-note-button {
   margin: 0 0px;
   padding: 6px;
+  border: 2px solid;
+  background: linear-gradient(51deg, rgba(255, 0, 0, 0.705), rgba(255, 255, 0, 0.621), rgba(0, 128, 0, 0.632), rgba(0, 0, 255, 0.642), rgba(238, 130, 238, 0.555));
+  animation: gradient-wave 0.5s infinite;
 }
 
 .new-note-button:hover, .new-note-button:active {
