@@ -1,3 +1,5 @@
+import SessionTimer from './../components/Timer';
+
 interface Note
 {
   id: string;
@@ -26,7 +28,7 @@ const Sidebar = ({ Notes, loadNoteContent, deleteNote, createNote }: SidebarProp
             <img src="/new-note.png" alt="NewNote" className="new-note-icon" />
           </button>
         </div>
-        <div className='entries-containers'>
+        <div className='entries-container'>
           <div className="entries">
             {Notes.map((Note: Note, index) => (
               <div key={index} className="entry" onClick={() => displayNewNote(Note)}>
@@ -40,6 +42,7 @@ const Sidebar = ({ Notes, loadNoteContent, deleteNote, createNote }: SidebarProp
             ))}
           </div>
         </div>
+          <SessionTimer />
       </div>
     </div>
   );
