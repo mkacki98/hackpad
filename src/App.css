@@ -275,3 +275,16 @@ button {
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.146); /* Add a white border */
   margin-top: 2rem;
 }
+
+/* Remove bullet points */
+ul[data-type="taskList"] {
+  list-style-type: none;
+}
+
+/* Display text next to the todo and add margin on left*/
+ul[data-type="taskList"] > li > input,
+ul[data-type="taskList"] > li > div {
+  display: inline-block;
+  margin-left: 10px;
+}
+

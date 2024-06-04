@@ -1,7 +1,13 @@
-import { EditorContent, useEditor } from "@tiptap/react";
+import {  EditorContent, useEditor } from "@tiptap/react";
+
 import StarterKit from "@tiptap/starter-kit";
+import TaskList from '@tiptap/extension-task-list'
+import TaskItem from '@tiptap/extension-task-item'
+
+
 import Menubar from "./Menubar";
 import { useEffect } from "react";
+
 
 interface Note {
   id: string;
@@ -15,7 +21,6 @@ interface MainEditorProps {
 }
 
 export default function MainEditor({ displayedNote, saveNote}: MainEditorProps) {
-  
 
   const headlineEditor = useEditor({
     extensions: [StarterKit],
@@ -24,22 +29,24 @@ export default function MainEditor({ displayedNote, saveNote}: MainEditorProps) 
     onUpdate: () => {
       let newTitle = headlineEditor?.getHTML();
       if (newTitle !== undefined) {
-        console.log("New title to save: ", newTitle, "Old title: ", displayedNote.headline);
-        newTitle = newTitle.replace(/<\/?p>/g, '');
-        console.log("New title to save: ", newTitle, "Old title: ", displayedNote.headline);
-        saveNote(displayedNote.id, newTitle, displayedNote.content);
+        //newTitle = newTitle.replace(/<\/?p>/g, '');
+        let cleanedTitle = newTitle.replace(/<[^>]*>/g, '');
+        saveNote(displayedNote.id, cleanedTitle, displayedNote.content);
       }
     }
   })
 
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [StarterKit,
+      TaskList,
+      TaskItem,
+      ],
     content: ``,
 
     onUpdate: () => {
       let newContent = editor?.getHTML();
       if (newContent !== undefined) {
-        console.log("New content to save: ", newContent, "Old content: ", displayedNote.content);
+        console.log(newContent)
         saveNote(displayedNote.id, displayedNote.headline, newContent);
       }
     },
@@ -47,9 +54,9 @@ export default function MainEditor({ displayedNote, saveNote}: MainEditorProps) 
 
   
   useEffect(() => {
-    console.log("usingEffect in MainEditor")
     if (displayedNote) {
-      headlineEditor?.commands.setContent(displayedNote.headline);
+      let wrappedHeadline = `<h1>${displayedNote.headline}</h1>`;
+      headlineEditor?.commands.setContent(wrappedHeadline);
       editor?.commands.setContent(displayedNote.content);
     } else {
       headlineEditor?.commands.setContent("This is where the headline of the note goes.", false, { preserveWhitespace: "full" });

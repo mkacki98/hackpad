@@ -21,7 +21,7 @@ export default function Menubar({editor}: IMenubarProp) {
       {icon: 'list-unordered', onClick: () => getFocus().toggleBulletList().run(), isActive: isActive('list-unordered')},
       {icon: 'list-ordered', onClick: () => getFocus().toggleOrderedList().run(), isActive: isActive('list-ordered')},
       {icon: 'code-box-line', onClick: () => getFocus().toggleCodeBlock().run(), isActive: isActive('code-box-line')},
-    ],
+      {icon: 'list-check', onClick: () => getFocus().toggleTaskList().run(), isActive: isActive('task-item')}    ]
   ]
 
   return <div className="menu">

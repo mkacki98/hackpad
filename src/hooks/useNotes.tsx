@@ -70,11 +70,9 @@ export default function useNotes() {
   
       let updatedNotes;
       if (existingNoteIndex !== -1) {
-        console.log("Note with ID, ", note.id, " found, updating it with:", note.headline, " and ", note.content)
         updatedNotes = [...allNotes];
         updatedNotes[existingNoteIndex] = note;
       } else {
-        console.log("Note with ID, ", note.id, " not found, creating a new one.")
         updatedNotes = [...allNotes, note];
       }
       setAllNotes(updatedNotes);
