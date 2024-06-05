@@ -23,10 +23,11 @@ const Sidebar = ({ Notes, loadNoteContent, deleteNote, createNote }: SidebarProp
   return (
     <div className="sidebar">
       <div className="sidebar-container">
-        <div className="sidebar-tools">
+        <div className="sidebar-tools">          
           <button onClick={createNote} className="new-note-button">
             <img src="/new-note.png" alt="NewNote" className="new-note-icon" />
           </button>
+          <img src="/hackerpad.svg" alt="Delete" className="logo-icon" />
         </div>
         <div className='entries-container'>
           <div className="entries">

@@ -260,6 +260,12 @@ button {
   cursor: pointer;
 }
 
+.logo-icon {
+  width: 130px;
+  height: 130px;
+}
+
+
 .delete-icon {
   width: 15px;
   height: 15px;
