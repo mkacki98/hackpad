@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 const SessionTimer = () => {
-  const [minutes, setMinutes] = useState(25);
+  const [minutes, setMinutes] = useState(50);
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
