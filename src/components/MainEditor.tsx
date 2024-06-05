@@ -17,7 +17,7 @@ interface Note {
 
 
 interface MainEditorProps {
-  displayedNote: Note;
+  displayedNote: Note | null;
   saveNote: (id: string, headline: string, content: string) => void;
 }
 
@@ -33,8 +33,10 @@ export default function MainEditor({ displayedNote, saveNote}: MainEditorProps) 
       let newTitle = headlineEditor?.getHTML();
       if (newTitle !== undefined) {
         //newTitle = newTitle.replace(/<\/?p>/g, '');
-        let cleanedTitle = newTitle.replace(/<[^>]*>/g, '');
-        saveNote(displayedNote.id, cleanedTitle, displayedNote.content);
+        if (displayedNote) {
+          let cleanedTitle = newTitle.replace(/<[^>]*>/g, '');
+          saveNote(displayedNote.id, cleanedTitle, displayedNote.content);
+        }
       }
     }
   })
@@ -49,13 +51,13 @@ export default function MainEditor({ displayedNote, saveNote}: MainEditorProps) 
     onUpdate: () => {
       let newContent = editor?.getHTML();
       if (newContent !== undefined) {
-        console.log(newContent)
-        saveNote(displayedNote.id, displayedNote.headline, newContent);
-        if (newContent.includes('<input type="checkbox" checked="checked">')) {
-          setConfetti(true);
-    
-          setTimeout(() => setConfetti(false), 2000);
-
+        if (displayedNote) {
+          saveNote(displayedNote.id, displayedNote.headline, newContent);
+          if (newContent.includes('<input type="checkbox" checked="checked">')) {
+            setConfetti(true);
+  
+            setTimeout(() => setConfetti(false), 2000);
+        }
       }}}
     });
 
