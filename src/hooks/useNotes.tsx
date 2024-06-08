@@ -19,32 +19,22 @@ export default function useNotes() {
   };
 
   useEffect(() => {
-    // load from locastorage on mount
-    // const loadNotes = () => {
-    //   try {
-    //     const savedNotesData = localStorage.getItem('notes');
-    //     const savedNotes = savedNotesData ? JSON.parse(savedNotesData) : [];
-    //     setAllNotes(savedNotes);
-    //   } catch (error) {
-    //     console.error('Err  or loading Notes on mount:', error);
-      
-    // };
-    const deleteAllNotes = () => {
+    console.log("Mount triggered.");
+    const loadNotes = () => {
       try {
-        setAllNotes([]);
-        localStorage.setItem('notes', JSON.stringify([]));
+        const savedNotesData = localStorage.getItem('notes');
+        const savedNotes = savedNotesData ? JSON.parse(savedNotesData) : [];
+        setAllNotes(savedNotes);
       } catch (error) {
-        console.error('Error deleting all Notes:', error);
+        console.error('Error loading Notes on mount:', error);
       }
     };
-
-    deleteAllNotes(); 
-    //loadNotes();
-  }, []);
-  
+    loadNotes();
+  }, [setAllNotes]);
 
   const createNote = () => {
     const id = uuidv4();
+    console.log("Creating note.")
 
     const currentDate = new Date();
     let formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
@@ -115,5 +105,5 @@ export default function useNotes() {
     }
   };
 
-  return { allNotes, displayedNote, saveNote, deleteNote, loadNoteContent, createNote};
+  return { allNotes, displayedNote, setAllNotes, saveNote, deleteNote, loadNoteContent, createNote};
 }
