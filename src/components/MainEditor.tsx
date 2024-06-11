@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 
 interface Note {
   id: string;
+  createdAt: Date,
+  title: string;
   headline: string;
   content: string;
 }
@@ -18,7 +20,7 @@ interface Note {
 
 interface MainEditorProps {
   displayedNote: Note | null;
-  saveNote: (id: string, headline: string, content: string) => void;
+  saveNote: (id: string, createdAt: Date, title: string, headline: string, content: string) => void;
 }
 
 export default function MainEditor({ displayedNote, saveNote}: MainEditorProps) {
@@ -30,12 +32,12 @@ export default function MainEditor({ displayedNote, saveNote}: MainEditorProps) 
     content: '',
 
     onUpdate: () => {
-      let newTitle = headlineEditor?.getHTML();
-      if (newTitle !== undefined) {
+      let newHeadline = headlineEditor?.getHTML();
+      if (newHeadline !== undefined) {
         //newTitle = newTitle.replace(/<\/?p>/g, '');
         if (displayedNote) {
-          let cleanedTitle = newTitle.replace(/<[^>]*>/g, '');
-          saveNote(displayedNote.id, cleanedTitle, displayedNote.content);
+          let cleanedHeadline = newHeadline.replace(/<[^>]*>/g, '');
+          saveNote(displayedNote.id, displayedNote.createdAt, displayedNote.title, cleanedHeadline, displayedNote.content);
         }
       }
     }
@@ -52,7 +54,7 @@ export default function MainEditor({ displayedNote, saveNote}: MainEditorProps) 
       let newContent = editor?.getHTML();
       if (newContent !== undefined) {
         if (displayedNote) {
-          saveNote(displayedNote.id, displayedNote.headline, newContent);
+          saveNote(displayedNote.id, displayedNote.createdAt, displayedNote.title, displayedNote.headline, newContent);
           if (newContent.includes('<input type="checkbox" checked="checked">')) {
             setConfetti(true);
   

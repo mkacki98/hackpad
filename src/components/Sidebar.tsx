@@ -3,6 +3,8 @@ import SessionTimer from './../components/Timer';
 interface Note
 {
   id: string;
+  createdAt: Date;
+  title:string;
   headline: string;
   content: string;
 }
@@ -30,11 +32,11 @@ const Sidebar = ({ Notes, loadNoteContent, deleteNote, createNote }: SidebarProp
           <img src="/hackerpad.svg" alt="Delete" className="logo-icon" />
         </div>
         <div className='entries-container'>
-          <div className="entries">
-            {Notes.map((Note: Note, index) => (
+        <div className="entries">
+            {Notes.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()).map((Note: Note, index) => (
               <div key={index} className="entry" onClick={() => displayNewNote(Note)}>
                 <div className="entry-content" onClick={(e) => e.stopPropagation()}>
-                  {Note.headline}
+                  {Note.title}
                 </div>
                 <button onClick={(e) => {e.stopPropagation(); deleteNote(Note);}} className="delete-button">
                   <img src="/delete.svg" alt="Delete" className="delete-icon" />

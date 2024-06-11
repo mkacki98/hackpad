@@ -5,6 +5,8 @@ import {daybookTemplate} from '../templates/daybookTemplate';
 
 interface Note {
   id: string;
+  createdAt: Date;
+  title: string;
   headline: string;
   content: string;
 } 
@@ -14,8 +16,8 @@ export default function useNotes() {
   const [allNotes, setAllNotes] = useState<Note[]>([]);
   const [displayedNote, setDisplayedNoteState] = useState<Note | null>(null);
 
-  const setDisplayedNote = (id: string, headline: string, content: string): void => {
-    setDisplayedNoteState({ id, headline, content });
+  const setDisplayedNote = (id: string, createdAt: Date, title: string, headline: string, content: string): void => {
+    setDisplayedNoteState({ id, createdAt, title, headline, content });
   };
 
   useEffect(() => {
@@ -39,18 +41,19 @@ export default function useNotes() {
     const currentDate = new Date();
     let formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
 
-    const newNote = {id: id, headline: formattedDate, content: daybookTemplate};
+    const newNote = {id: id, createdAt: currentDate, title: formattedDate, headline: formattedDate, content: daybookTemplate};
     saveNote(newNote);
-    setDisplayedNote(newNote.id, newNote.headline, newNote.content);
+    setDisplayedNote(newNote.id, newNote.createdAt, newNote.title, newNote.headline, newNote.content);
   }
 
+
   async function saveNote(note: Note): Promise<void>;
-  async function saveNote(id: string, headline: string, content: string): Promise<void>;
-  async function saveNote(idOrNote: string | Note, headline?: string, content?: string): Promise<void> {
+  async function saveNote(id: string, createdAt: Date, title: string, headline: string, content: string): Promise<void>;
+  async function saveNote(idOrNote: string | Note, createdAt?: Date, title?: string, headline?: string, content?: string): Promise<void> {
     let note: Note;
   
     if (typeof idOrNote === 'string') {
-      note = { id: idOrNote, headline: headline!, content: content! };
+      note = { id: idOrNote, createdAt: createdAt!, title: title!, headline: headline!, content: content! };
     } else {
       note = idOrNote;
     }
@@ -73,10 +76,6 @@ export default function useNotes() {
     }
   };
 
-  // useEffect(() => {
-  //   console.log("All notes after successful saving: ", allNotes);
-  // }, [allNotes]);
-
   const deleteNote = (Note: Note) => {
     try {
       const updatedNotes = allNotes.filter(n => n.id !== Note.id);
@@ -98,7 +97,7 @@ export default function useNotes() {
       const selectedNote = savedNotes.find((existingNote: Note) => existingNote.id === Note.id);
 
       if (selectedNote) {
-        setDisplayedNote(selectedNote.id, selectedNote.headline, selectedNote.content);
+        setDisplayedNote(selectedNote.id, selectedNote.createdAt, selectedNote.title, selectedNote.headline, selectedNote.content);
       }
     } catch (error) {
       console.error('Error loading Note content to the main interface:', error);
