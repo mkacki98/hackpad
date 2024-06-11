@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "hackpad",
+    "productName": "Hackerpad",
     "version": "0.0.0"
   },
   "tauri": {
@@ -19,7 +19,7 @@
     },
     "windows": [
       {
-        "title": "hackpad",
+        "title": "Hackerpad",
         "width": 800,
         "height": 600
       }
