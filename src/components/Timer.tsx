@@ -6,7 +6,7 @@ export const config = {
 };
 
 const SessionTimer = () => {
-  const [minutes, setMinutes] = useState(1);
+  const [minutes, setMinutes] = useState(config.session_time);
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
