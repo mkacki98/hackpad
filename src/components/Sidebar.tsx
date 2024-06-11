@@ -29,7 +29,10 @@ const Sidebar = ({ Notes, loadNoteContent, deleteNote, createNote }: SidebarProp
           <button onClick={createNote} className="new-note-button">
             <img src="/new-note.png" alt="NewNote" className="new-note-icon" />
           </button>
+          <div className='logo'>
           <img src="/hackerpad.svg" alt="Delete" className="logo-icon" />
+          <div>V0.0</div>
+          </div>
         </div>
         <div className='entries-container'>
         <div className="entries">

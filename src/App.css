@@ -378,3 +378,16 @@ ul[data-type="taskList"] > li > div {
     flex-direction: column;
   }
 }
+
+.logo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 15px;
+  color: rgb(185, 129, 45);
+  font-weight: 700;
+  width: 30%;
+}
