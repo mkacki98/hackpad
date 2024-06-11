@@ -26,7 +26,8 @@ interface MainEditorProps {
 export default function MainEditor({ displayedNote, saveNote}: MainEditorProps) {
 
   const [confetti, setConfetti] = useState(false);
-  
+  const [checkedCount, setCheckedCount] = useState(0);
+
   const headlineEditor = useEditor({
     extensions: [StarterKit],
     content: '',
@@ -43,11 +44,10 @@ export default function MainEditor({ displayedNote, saveNote}: MainEditorProps) 
     }
   })
 
+
+
   const editor = useEditor({
-    extensions: [StarterKit,
-      TaskList,
-      TaskItem,
-      ],
+    extensions: [StarterKit, TaskList, TaskItem],
     content: ``,
 
     onUpdate: () => {
@@ -55,15 +55,18 @@ export default function MainEditor({ displayedNote, saveNote}: MainEditorProps) 
       if (newContent !== undefined) {
         if (displayedNote) {
           saveNote(displayedNote.id, displayedNote.createdAt, displayedNote.title, displayedNote.headline, newContent);
-          if (newContent.includes('<input type="checkbox" checked="checked">')) {
+          let newCheckedCount = (newContent.match(/<input type="checkbox" checked="checked">/g) || []).length;
+          if (newCheckedCount > checkedCount) {
             setConfetti(true);
-  
-            setTimeout(() => setConfetti(false), 2000);
+            setTimeout(() => setConfetti(false), 100);
+          }
+          setCheckedCount(newCheckedCount);
         }
-      }}}
-    });
+      }
+    }
+  });
 
-
+  
   
   useEffect(() => {
     if (displayedNote) {
