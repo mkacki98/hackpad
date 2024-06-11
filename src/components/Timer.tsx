@@ -1,7 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 
+export const config = {
+  session_time: 50, 
+  break_time: 10, 
+};
+
 const SessionTimer = () => {
-  const [minutes, setMinutes] = useState(50);
+  const [minutes, setMinutes] = useState(1);
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -12,7 +17,15 @@ const SessionTimer = () => {
     intervalRef.current = setInterval(() => {
       setSeconds(prevSeconds => {
         if (prevSeconds === 0) {
-          setMinutes(prevMinutes => prevMinutes !== 0 ? prevMinutes - 1 : 25);
+          setMinutes(prevMinutes => {
+            if (prevMinutes !== 0) {
+              return prevMinutes - 1;
+            } else {
+              const audio = new Audio('/public/completed.mp3');
+              audio.play();
+              return config.session_time; // use config.session_time instead of hard-coded value
+            }
+          });
           return 59;
         } else {
           return prevSeconds - 1;
@@ -32,7 +45,7 @@ const SessionTimer = () => {
     setIsRunning(false);
     if (intervalRef.current !== null) clearInterval(intervalRef.current);
     intervalRef.current = null;
-    setMinutes(50);
+    setMinutes(config.session_time); // use config.session_time instead of hard-coded value
     setSeconds(0);
   };
 
