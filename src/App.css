@@ -315,7 +315,6 @@ ul[data-type="taskList"] > li > div {
 
 .clock{
   display: flex;
-  border: 1px solid #ffffff24;
   justify-content: center;
   align-items: center;
   font-size: 20px;
