@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 interface Note {
   id: string;
-  createdAt: Date,
+  createdAt: string,
   title: string;
   headline: string;
   content: string;
@@ -20,7 +20,7 @@ interface Note {
 
 interface MainEditorProps {
   displayedNote: Note | null;
-  saveNote: (id: string, createdAt: Date, title: string, headline: string, content: string) => void;
+  saveNote: (id: string, createdAt: string, title: string, headline: string, content: string) => void;
 }
 
 export default function MainEditor({ displayedNote, saveNote}: MainEditorProps) {

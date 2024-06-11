@@ -3,8 +3,8 @@ import SessionTimer from './../components/Timer';
 interface Note
 {
   id: string;
-  createdAt: Date;
-  title:string;
+  createdAt: string;
+  title: string;
   headline: string;
   content: string;
 }
@@ -36,7 +36,8 @@ const Sidebar = ({ Notes, loadNoteContent, deleteNote, createNote }: SidebarProp
         </div>
         <div className='entries-container'>
         <div className="entries">
-            {Notes.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()).map((Note: Note, index) => (
+          {Notes.length > 0 ? (
+            Notes.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).map((Note: Note, index) => (
               <div key={index} className="entry" onClick={() => displayNewNote(Note)}>
                 <div className="entry-content" onClick={(e) => e.stopPropagation()}>
                   {Note.title}
@@ -45,8 +46,9 @@ const Sidebar = ({ Notes, loadNoteContent, deleteNote, createNote }: SidebarProp
                   <img src="/delete.svg" alt="Delete" className="delete-icon" />
                 </button>
               </div>
-            ))}
-          </div>
+            ))
+          ) : null}
+        </div>
         </div>
           <SessionTimer />
       </div>

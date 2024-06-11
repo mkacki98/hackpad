@@ -5,7 +5,7 @@ import {daybookTemplate} from '../templates/daybookTemplate';
 
 interface Note {
   id: string;
-  createdAt: Date;
+  createdAt: string;
   title: string;
   headline: string;
   content: string;
@@ -16,7 +16,7 @@ export default function useNotes() {
   const [allNotes, setAllNotes] = useState<Note[]>([]);
   const [displayedNote, setDisplayedNoteState] = useState<Note | null>(null);
 
-  const setDisplayedNote = (id: string, createdAt: Date, title: string, headline: string, content: string): void => {
+  const setDisplayedNote = (id: string, createdAt: string, title: string, headline: string, content: string): void => {
     setDisplayedNoteState({ id, createdAt, title, headline, content });
   };
 
@@ -24,6 +24,7 @@ export default function useNotes() {
     console.log("Mount triggered.");
     const loadNotes = () => {
       try {
+        //localStorage.clear(); // This will clear all data in localStorage
         const savedNotesData = localStorage.getItem('notes');
         const savedNotes = savedNotesData ? JSON.parse(savedNotesData) : [];
         setAllNotes(savedNotes);
@@ -34,22 +35,27 @@ export default function useNotes() {
     loadNotes();
   }, [setAllNotes]);
 
+  useEffect(() => {
+    console.log(allNotes);
+  }, [allNotes]);
+  
   const createNote = () => {
     const id = uuidv4();
     console.log("Creating note.")
 
     const currentDate = new Date();
     let formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
+    let createdAt = `${currentDate.getFullYear()}-${(currentDate.getMonth()+1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')} ${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}:${currentDate.getSeconds().toString().padStart(2, '0')}.${currentDate.getMilliseconds().toString().padStart(3, '0')}`;
 
-    const newNote = {id: id, createdAt: currentDate, title: formattedDate, headline: formattedDate, content: daybookTemplate};
+    const newNote = {id: id, createdAt: createdAt, title: formattedDate, headline: formattedDate, content: daybookTemplate};
     saveNote(newNote);
     setDisplayedNote(newNote.id, newNote.createdAt, newNote.title, newNote.headline, newNote.content);
   }
 
 
   async function saveNote(note: Note): Promise<void>;
-  async function saveNote(id: string, createdAt: Date, title: string, headline: string, content: string): Promise<void>;
-  async function saveNote(idOrNote: string | Note, createdAt?: Date, title?: string, headline?: string, content?: string): Promise<void> {
+  async function saveNote(id: string, createdAt: string, title: string, headline: string, content: string): Promise<void>;
+  async function saveNote(idOrNote: string | Note, createdAt?: string, title?: string, headline?: string, content?: string): Promise<void> {
     let note: Note;
   
     if (typeof idOrNote === 'string') {
