@@ -1,8 +1,17 @@
+### Hackerpad [WIP]
 
+Install packages.
+
+```
 yarn
+```
 
+Test locally.
+```
 yarn tauri dev
+```
 
-if works then;
-
+Build an executable.
+```
 yarn tauri build
+```
